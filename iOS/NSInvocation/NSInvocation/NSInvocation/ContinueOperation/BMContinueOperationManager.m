@@ -96,6 +96,7 @@
 /** 给target动态发selector消息，带arguments参数 */
 + (void)invokeWithTarget:(id)target selector:(SEL)selector arguments:(NSArray *)arguments {
     if (!target) return;
+    
     NSMethodSignature *signature = [[target class] instanceMethodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     invocation.target = target;
