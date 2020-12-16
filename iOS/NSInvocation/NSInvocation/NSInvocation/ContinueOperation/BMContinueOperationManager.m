@@ -93,4 +93,21 @@
     [self resetData];
 }
 
+/** 给target动态发selector消息，带arguments参数 */
++ (void)invokeWithTarget:(id)target selector:(SEL)selector arguments:(NSArray *)arguments {
+    if (!target) return;
+    NSMethodSignature *signature = [[target class] instanceMethodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.target = target;
+    invocation.selector = selector;
+    
+    if (arguments && arguments.count > 0) {
+        [arguments enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [invocation setArgument:&obj atIndex:2 + idx];
+        }];
+    }
+    
+    [invocation invoke];
+}
+
 @end
