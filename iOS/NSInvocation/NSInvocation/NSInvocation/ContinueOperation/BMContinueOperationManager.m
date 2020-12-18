@@ -48,6 +48,7 @@
     [self resetData];
 }
 
+/** 检查登录态，在未登录状态，登录成功后，会继续[target selector]的操作 */
 - (BOOL)checkLoginStatusContinueOperationWithTarget:(id)target selector:(SEL)selector arguments:(NSArray *)arguments {
     if ([BMLoginUserManager sharedInstance].loginedUserModel.loginStatus != BMUserLoginStatusLoginNormal) {
         _lastTarget = target;
@@ -109,6 +110,10 @@
     }
     
     [invocation invoke];
+}
+
+- (void)test {
+    [self performSelector:[self removeAddedObserver] withObject:nil];
 }
 
 @end
